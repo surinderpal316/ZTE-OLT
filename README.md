@@ -1,12 +1,8 @@
 # ZTE-OLT
 
-##ZTE 8 PORT OLT LIVE CONF 
-============================================================================================================================================================
+##ZTE 8 & 16 PORT OLT LIVE CONF 
+===========================================
 
-----------------------------------
-Consol
-COM port 115200
-----------------------------------
 
 configure terminal
 hostname OLT_HKUKG024_MOHAN_NAGAR_2_ZTE8P
@@ -215,30 +211,32 @@ write
 
 
 
-	tacacs enable
-	system-user
-	default-privilege-level 15
-	user-default
-	bind authentication-template 1
-	bind authorization-template 1
-	exit
-	exit
+tacacs enable
+system-user
+default-privilege-level 15
+user-default
+bind authentication-template 1
+bind authorization-template 1
+exit
+exit
 
-	tacacs-client source-interface vlan3501
-	tacacs-server timeout 1
-	tacacs-server deadtime 1
-	tacacs-server key pix321
-	tacacs-server host 192.168.253.196
-	tacplus group-server standard
-	server 192.168.253.196
-	exit
-	aaa-authentication-template 2001
-	aaa-authentication-type tacacs-local
-	authentication-tacacs-group standard
-	exit
-	aaa-authorization-template 2001
-	aaa-authorization-type tacacs-local
-	authorization-tacacs-group standard
-	exit
+
+tacacs-client source-interface vlan3501
+tacacs-server timeout 1
+tacacs-server deadtime 1
+tacacs-server key pix321
+tacacs-server host 192.168.253.196
+tacplus group-server standard
+server 192.168.253.196
+exit
+aaa-authentication-template 2001
+aaa-authentication-type tacacs-local
+authentication-tacacs-group standard
+exit
+
+aaa-authorization-template 2001
+aaa-authorization-type tacacs-local
+authorization-tacacs-group standard
+exit
 
 
