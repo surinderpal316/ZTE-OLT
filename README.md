@@ -240,3 +240,80 @@ authorization-tacacs-group standard
 exit
 
 
+#Modem Configuration
+##ZTE CONFIGUATION 8,32,16 PORT
+-------------------------------------
+
+##ZTE 8 PORT Modem Configuration
+----------
+interface gpon_olt-1/1/1
+onu 4 type ZTE-F670L sn ALCLEB132795
+exit
+interface gpon_onu-1/1/1:4
+sn-bind enable sn
+tcont 1 name HSI profile 1g
+gemport 1 name HSI tcont 1
+exit
+pon-onu-mng gpon_onu-1/1/1:4
+broadcast-limit ethuni eth_0/2 rate-limit 20
+loop-detect ethuni eth_0/2 enable
+service HSI gemport 1 vlan 721
+vlan port eth_0/2 mode trunk
+wan-ip ipv4 mode dhcp vlan-profile HSI721 host 1
+exit
+interface vport-1/1/1.4:1
+service-port 1 user-vlan 721 vlan 721
+exit
+exit
+
+##ZTE 32 PORT Modem Configuration
+-----------
+interface gpon_olt-1/3/2
+onu 56 type ZTE-F670L sn ZTEGC8EEBEDF
+exit
+interface gpon_onu-1/3/2:56
+sn-bind enable sn
+tcont 1 name HSI profile 1g
+gemport 1 name HSI tcont 1
+exit
+pon-onu-mng gpon_onu-1/3/2:56
+broadcast-limit ethuni eth_0/2 rate-limit 20
+loop-detect ethuni eth_0/2 enable
+service HSI gemport 1 vlan 1221
+vlan port eth_0/2 mode trunk
+wan-ip ipv4 mode dhcp vlan-profile HSI1221 host 1
+exit
+interface vport-1/3/2.56:1
+service-port 1 user-vlan 1221 vlan 1221
+exit
+exit
+write
+
+##ZTE 16 PORT Modem Configuration 
+-----------
+interface gpon-olt_1/2/14
+no onu 5
+onu 5 type ZTE-F660 sn ZTEGC8E1EB2C
+!
+interface gpon-onu_1/2/14:5
+tcont 1 name HSI_VOICE profile 1g
+tcont 2 name ROM profile 1g
+gemport 1 name HSI_VOICE tcont 1
+gemport 2 name ROM  tcont 2
+service-port 1 vport 1 user-vlan 1221 vlan 1221 
+service-port 2 vport 2 user-vlan 99 vlan 99 
+	!
+
+pon-onu-mng gpon-onu_1/2/14:5
+service HSI_VOICE gemport 1 vlan 1221
+service ROM gemport 2 vlan 99
+voip protocol sip
+voip-ip mode dhcp vlan-profile HSI1221 host 1
+loop-detect ethuni eth_0/1 enable
+loop-detect ethuni eth_0/2 enable
+loop-detect ethuni eth_0/3 enable
+loop-detect ethuni eth_0/4 enable
+!
+exit
+write
+
