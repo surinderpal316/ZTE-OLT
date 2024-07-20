@@ -317,3 +317,49 @@ loop-detect ethuni eth_0/4 enable
 exit
 write
 
+
+## Trans Modem
+##NOKIA TRANS ON ZTE OLT
+------------------------
+
+## 8-port
+
+interface gpon_olt-1/1/9
+no on 20
+onu 20 type ZTE-F660 sn ALCLB3AE4316
+!
+
+interface gpon_onu-1/1/9:20
+  tcont 1 name HSI profile 1g
+  gemport 1 name HSI tcont 1
+!
+pon-onu-mng gpon_onu-1/1/9:20
+  service HSI gemport 1 vlan 721
+!
+interface vport-1/1/9.20:1
+  service-port 1 user-vlan 721 vlan 1721
+!
+
+-------------------------------------------
+## 16-port
+
+interface gpon-olt_1/1/11
+no onu 1
+onu 1 type ZTE-F660 sn ALCLFA648E98	 
+!
+interface gpon-onu_1/1/11:1
+  name ####
+  sn-bind enable sn
+  tcont 1 name hsi profile 1g
+  gemport 1 tcont 1
+  service-port 1 vport 1 user-vlan 881 vlan 3501
+!
+
+pon-onu-mng gpon-onu_1/1/11:1
+service hsi gemport 1 vlan 881
+loop-detect ethuni eth_0/1 enable
+loop-detect ethuni eth_0/2 enable
+loop-detect ethuni eth_0/3 enable
+loop-detect ethuni eth_0/1 enable
+!
+
